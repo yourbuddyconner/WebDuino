@@ -26,5 +26,10 @@
 </template>
 
 <template name="projects">
-	<h1>Youre Logged in!</h1>
+	<h1>Your Projects</h1>
+	<ul id="projects_list">
+	{{#each projects}}
+		<li>{{name}}</li>
+	{{/each}}
+	</ul>
 </template>

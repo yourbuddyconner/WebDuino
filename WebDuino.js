@@ -5,13 +5,9 @@ if (Meteor.isClient) {
     return "Welcome to WebDuino.";
   };
 
-  Template.home.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
+  Template.projects.projects = function () {
+    return Projects.find({}, {owner: Meteor.user()}).fetch();
+  }
 }
 
 if (Meteor.isServer) {
