@@ -6,3 +6,5 @@
 standard-app-packages
 autopublish
 insecure
+accounts-base
+accounts-password
