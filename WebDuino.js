@@ -9,12 +9,31 @@ if (Meteor.isClient) {
     return Projects.find({owner: Meteor.user()}).fetch();
   }
   Template.projects.sensors = function (parent) {
-    console.log(parent);
     return Sensors.find({parentId: parent.hash.parent});
+  }
+  Template.projects.events = {
+    'click button': function(e){
+      var parent = $(e.target).parent().attr("id");
+      var sensorName = $("#sensor_form_name_" + parent);
+      var sensorType = $("#sensor_form_type_" + parent)
+      var pins = $("#sensor_form_pins_" + parent);
+      console.log(sensorName.val());
+      if (sensorName.val() == ""){
+        sensorName.parent().toggleClass("error");
+        alert("Please input a sensor name.");
+      }
+      else{
+        Sensors.insert({
+          parentId: parent,
+          name: sensorName.val(),
+          sensorType: sensorType.val(),
+          pins: pins.val().split(" ").map(function(x){return parseInt(x)})
+        });
+      }
+    }
   }
   Template.createProject.events = {
     'click button': function(e){
-      console.log(e);
       e.preventDefault();
       var field = $('#project_name');
       if (field.val() == ""){

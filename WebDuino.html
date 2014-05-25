@@ -61,7 +61,25 @@
 									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}data">Data</a></p>
 								</div>
 							{{/each}}
-
+							<table id="sensorTable">
+								<tr class="control-group" id="sensor_form_{{_id}}">
+									<td><input type="text" name="sensorName" id="sensor_form_name_{{_id}}" placeholder="Sensor Name"></td>
+										<td>
+											<select class="form-control" id="sensor_form_type_{{_id}}" name="sensorType">
+											<option>Potentiometer</option>
+											<option>Accelerometer</option>
+											</select>
+										</td>
+									<td>
+										<input type="text" name="pins" id="sensor_form_pins_{{_id}}" placeholder="Pins (Ex. 1 2 3)">
+									</td>
+									<td>
+										<span id={{_id}}>
+											<button id="add_sensor_{{_id}}">Add Sensor</button>
+										</span>
+									</td>
+								</tr>
+							</table>
 					</div>
 				</div>
 			</div>
@@ -71,7 +89,6 @@
 
 <template name="createProject">
 	<div id="addSensor" class="panel-collapse collapse control-group">
-		
 		<form class="form-horizontal">
    			<div class="control-group span6">
       		<label class="control-label" for="project_name">Please input a project name: </label>
