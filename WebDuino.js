@@ -1,4 +1,6 @@
 Projects = new Meteor.Collection("projects");
+Readings = new Meteor.Collection("readings");
+Sensors = new Meteor.Collection("sensors");
 
 if (Meteor.isClient) {
   Template.home.greeting = function () {
@@ -10,8 +12,16 @@ if (Meteor.isClient) {
   }
 }
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
+if (Meteor.isServer) { 
+    Router.map(function(){
+      this.route('accessPoint',{
+        path: '/api/:_id',
+        action: function(){
+          var project = Projects.findOne({_id: this.params._id}).fetch();
+          if(project){
+
+          }
+        }
+      });
+    });
 }
