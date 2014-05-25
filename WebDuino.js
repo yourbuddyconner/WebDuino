@@ -5,16 +5,35 @@ Readings = new Meteor.Collection("readings");
 
 
 if (Meteor.isClient) {
-  Template.home.greeting = function () {
-    return "Welcome to WebDuino.";
-  };
-
   Template.projects.projects = function () {
     return Projects.find({}, {owner: Meteor.user()}).fetch();
   }
-  Template.projects.sensors = function (yolo) {
-    return Sensors.find({}, {parentId: yolo});
+  Template.projects.sensors = function (parent) {
+    return Sensors.find({}, {parentId: parent});
   }
+  Template.createProject.events = {
+    'click button': function(e){
+      console.log(e);
+      e.preventDefault();
+      var field = $('#project_name');
+      if (field.val() == ""){
+        field.parent().parent().toggleClass("error");
+        alert("Please input a project name.");
+      }
+      else if(Projects.find({owner: Meteor.user(), name: field.val()}).fetch() != 0){
+        field.parent().parent().toggleClass("error");  
+        alert("You already have a project by that name, choose another.");           
+      }
+      else{
+        Projects.insert({
+          owner: Meteor.user(),
+          name: field.val()
+        });
+        field.parent().parent().toggleClass("success");
+        field.val("");
+      }
+    }
+  };
 }
 
 if (Meteor.isServer) { 
