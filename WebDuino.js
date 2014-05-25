@@ -12,8 +12,8 @@ if (Meteor.isClient) {
   Template.projects.projects = function () {
     return Projects.find({}, {owner: Meteor.user()}).fetch();
   }
-  Template.projects.sensors = function () {
-    return Sensors.find({}, {parentId: Projects.find({}, {owner: Meteor.user()})});
+  Template.projects.sensors = function (yolo) {
+    return Sensors.find({}, {parentId: yolo});
   }
 }
 
@@ -24,6 +24,7 @@ if (Meteor.isServer) {
         action: function(){
           var project = Projects.findOne({_id: this.params._id}).fetch();
           if(project){
+            Sensors = Sensors.find({}, {parentId: project._id}).fetch(); // An array of Sensors that belong to the project
             Readings.insert({
 
             })
