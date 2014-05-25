@@ -23,7 +23,6 @@
 			{{> home}}
 		{{/if}}
 	</div>
-	
 </body>
 
 <template name="home">
@@ -71,7 +70,29 @@
 									<p class="3indent">Last Recieved Data: (TODO)</p>
 									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}_data">Data</a></p>
 									<div id="{{_id}}_data" class="panel-collapse collapse">
-										{{> graph sensorId _id}}
+										<div id="{{_id}}_graph" style="width:100%; height:400px;"></div>
+											<script type="text/javascript">
+												$(function () { 
+													var readings = Readings.find({parentId: '{{_id}}'}).fetch();
+													var newArray = [];
+													$.each(readings, function (index, value) {
+														newArray[index] = value.data;
+													});
+
+												    $('#{{_id}}_graph').highcharts({
+												        chart: {
+												            type: 'line'
+												        },
+												        title: {
+												            text: 'Data Recieved'
+												        },
+												        series: [{
+												            name: '{{name}}',
+												            data: newArray
+												        }]
+												    });
+												});
+											</script>
 									</div>
 								</div>
 							{{/each}}
@@ -136,8 +157,12 @@
 </template>
 
 <template name="graph">
-{{_id}}
+	{{_id}}
+	<script>console.log("{{_id}}");
+	console.log($('#{{_id}}_data'));
+	</script>
 	<script>
+		console.log("executed2");
 	    	console.log("{{_id}}");
 	    	$('#{{_id}}_data').highcharts({
 		        chart: {
