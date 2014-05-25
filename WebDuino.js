@@ -6,10 +6,11 @@ Readings = new Meteor.Collection("readings");
 
 if (Meteor.isClient) {
   Template.projects.projects = function () {
-    return Projects.find({}, {owner: Meteor.user()}).fetch();
+    return Projects.find({owner: Meteor.user()}).fetch();
   }
   Template.projects.sensors = function (parent) {
-    return Sensors.find({}, {parentId: parent});
+    console.log(parent);
+    return Sensors.find({parentId: parent.hash.parent});
   }
   Template.createProject.events = {
     'click button': function(e){
