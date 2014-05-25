@@ -23,7 +23,6 @@
 			{{> home}}
 		{{/if}}
 	</div>
-	<div class="sensor-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	
 </body>
 
@@ -72,38 +71,7 @@
 									<p class="3indent">Last Recieved Data: (TODO)</p>
 									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}_data">Data</a></p>
 									<div id="{{_id}}_data" class="panel-collapse collapse">
-										
-										<script>
-										       /* $('#{{_id}}_data').highcharts({
-										            chart: {
-										                type: 'line'
-										            },
-										            title: {
-										                text: 'Sensor Data'
-										            },
-										            subtitle: {
-										                text: 'Subtitle'
-										            },
-										            yAxis: {
-										                title: {
-										                    text: 'Sensor Value'
-										                }
-										            },
-										            plotOptions: {
-										                line: {
-										                    dataLabels: {
-										                        enabled: true
-										                    },
-										                    enableMouseTracking: false
-										                }
-										            },
-										            series: [{
-										                name: 'Sensor Name Here',
-										                data: []{{../sensorData parent=_id}}
-										            }]
-										        });
-										    */
-										</script>
+										{{> graph parentId="yolo"}}
 									</div>
 								</div>
 							{{/each}}
@@ -143,7 +111,6 @@
 	      		</div>
     		</div>
     		<button id="check_name">Check Name</button>
-
     	</form>
 
 <!-- 		<input type="text" name="projectName" id="project_name" class="span6" placeholder="Project Name">  
@@ -166,4 +133,37 @@
 			{{/each}}
 		</table> -->
 	</div>
+</template>
+
+<template name="graph">
+	<script>
+	    $('#{{_id}}_data').highcharts({
+	        chart: {
+	            type: 'line'
+	        },
+	        title: {
+	            text: 'Sensor Data'
+	        },
+	        subtitle: {
+	            text: 'Subtitle'
+	        },
+	        yAxis: {
+	            title: {
+	                text: 'Sensor Value'
+	            }
+	        },
+	        plotOptions: {
+	            line: {
+	                dataLabels: {
+	                    enabled: true
+	                },
+	                enableMouseTracking: false
+	            }
+	        },
+	        series: [{
+	            name: 'Sensor Name Here',
+	            data: {{data}}
+	        }]
+	    });
+	</script>
 </template>
