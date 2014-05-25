@@ -10,3 +10,4 @@ accounts-base
 accounts-password
 bootstrap
 accounts-ui
+iron-router
