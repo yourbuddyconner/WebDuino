@@ -24,40 +24,7 @@
 		{{/if}}
 	</div>
 	<div class="sensor-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-	<script>
-		$(document).ready( function() {
-	        $('#container').highcharts({
-	            chart: {
-	                type: 'line'
-	            },
-	            title: {
-	                text: 'Sensor Data'
-	            },
-	            subtitle: {
-	                text: 'Subtitle'
-	            },
-	            yAxis: {
-	                title: {
-	                    text: 'Sensor Value'
-	                }
-	            },
-	            plotOptions: {
-	                line: {
-	                    dataLabels: {
-	                        enabled: true
-	                    },
-	                    enableMouseTracking: false
-	                }
-	            },
-	            series: [{
-	                name: 'Sensor Name Here',
-	                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6] //Sensor values here
-	            }]
-	        });
-	    });
-	    
-
-	</script>
+	
 </body>
 
 <template name="home">
@@ -103,7 +70,41 @@
 									<p class="3indent">Sensor Type: {{sensorType}}</p>
 									<p class="3indent">Pins: {{pin}}</p>
 									<p class="3indent">Last Recieved Data: (TODO)</p>
-									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}data">Data</a></p>
+									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}_data">Data</a></p>
+									<div id="{{_id}}_data" class="panel-collapse collapse">
+										
+										<script>
+										       /* $('#{{_id}}_data').highcharts({
+										            chart: {
+										                type: 'line'
+										            },
+										            title: {
+										                text: 'Sensor Data'
+										            },
+										            subtitle: {
+										                text: 'Subtitle'
+										            },
+										            yAxis: {
+										                title: {
+										                    text: 'Sensor Value'
+										                }
+										            },
+										            plotOptions: {
+										                line: {
+										                    dataLabels: {
+										                        enabled: true
+										                    },
+										                    enableMouseTracking: false
+										                }
+										            },
+										            series: [{
+										                name: 'Sensor Name Here',
+										                data: []{{../sensorData parent=_id}}
+										            }]
+										        });
+										    */
+										</script>
+									</div>
 								</div>
 							{{/each}}
 							<table id="sensorTable">
