@@ -71,7 +71,7 @@
 									<p class="3indent">Last Recieved Data: (TODO)</p>
 									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}_data">Data</a></p>
 									<div id="{{_id}}_data" class="panel-collapse collapse">
-										{{> graph parentId="yolo"}}
+										{{> graph sensorId _id}}
 									</div>
 								</div>
 							{{/each}}
@@ -136,34 +136,36 @@
 </template>
 
 <template name="graph">
+{{_id}}
 	<script>
-	    $('#{{_id}}_data').highcharts({
-	        chart: {
-	            type: 'line'
-	        },
-	        title: {
-	            text: 'Sensor Data'
-	        },
-	        subtitle: {
-	            text: 'Subtitle'
-	        },
-	        yAxis: {
-	            title: {
-	                text: 'Sensor Value'
-	            }
-	        },
-	        plotOptions: {
-	            line: {
-	                dataLabels: {
-	                    enabled: true
-	                },
-	                enableMouseTracking: false
-	            }
-	        },
-	        series: [{
-	            name: 'Sensor Name Here',
-	            data: {{data}}
-	        }]
-	    });
+	    	console.log("{{_id}}");
+	    	$('#{{_id}}_data').highcharts({
+		        chart: {
+		            type: 'line'
+		        },
+		        title: {
+		            text: 'Sensor Data'
+		        },
+		        subtitle: {
+		            text: 'Subtitle'
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'Sensor Value'
+		            }
+		        },
+		        plotOptions: {
+		            line: {
+		                dataLabels: {
+		                    enabled: true
+		                },
+		                enableMouseTracking: false
+		            }
+		        },
+		        series: [{
+		            name: 'Sensor Name Here',
+		            data: {{data}}
+		        }]
+		    });
 	</script>
 </template>

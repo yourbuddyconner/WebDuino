@@ -14,6 +14,9 @@ if (Meteor.isClient) {
   Template.projects.sensorData = function (parent) {
     return Readings.find({parentId: parent.hash.parent}).fetch();
   }
+  Template.projects.sensorId = function (id) {
+    return {_id: id};
+  }
   Template.projects.events = {
     'click button': function(e){
       var parent = $(e.target).parent().attr("id");
@@ -57,9 +60,6 @@ if (Meteor.isClient) {
       }
     }
   };
-  Template.graph.data = function () {
-    alert(parentId);
-  }
 }
 
 if (Meteor.isServer) { 
