@@ -5,24 +5,24 @@ Readings = new Meteor.Collection("readings");
 var Schemas = {};
 
 Schemas.project = new SimpleSchema({
-  _id: {
-    type: String,
-    label: "_id"
-  },
+  // _id: {
+  //   type: String,
+  //   label: "_id"
+  // },
   name: {
     type: String,
     label: "Name"
-  }
+  },
   owner: {
     type: Object,
     label: "Owner"
   }
 });
 Schemas.sensor = new SimpleSchema({
-  _id: {
-    type: String,
-    label: "_id"
-  },
+  // _id: {
+  //   type: String,
+  //   label: "_id"
+  // },
   name: {
     type: String,
     label: "Name"
@@ -44,10 +44,10 @@ Schemas.sensor = new SimpleSchema({
   // }
 });
 Schemas.reading = new SimpleSchema({
-  _id: {
-    type: String,
-    label: "_id"
-  },
+  // _id: {
+  //   type: String,
+  //   label: "_id"
+  // },
   name: {
     type: String,
     label: "Name"
@@ -65,7 +65,7 @@ Schemas.reading = new SimpleSchema({
     label: "when this reading was saved to the database"
   },
   data: {
-    type: [int],
+    type: [Number],
     label: "values passed from the Arduino"
   }
 });
