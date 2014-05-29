@@ -3,30 +3,6 @@ Meteor.subscribe("projects");
 Meteor.subscribe("sensors");
 Meteor.subscribe("readings");
 
-/*
-  DB Schema: 
-    Projects {
-      _id: String,
-      owner: Meteor.user
-      name: String
-    }
-
-    Sensors {
-      _id: String,
-      ParentID: Project._id,
-      name: String,
-      sensorType: String,
-      pins: [int]
-    }
-
-    Readings {
-      _id: String,
-      parentID: Sensor,
-      timestamp: int,
-      data: [int] <-- corresponds to order in Sensors.pins
-    }
-*/
-
 Template.projects.projects = function () {
   return Projects.find({owner: Meteor.user()}).fetch();
 }
