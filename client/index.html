@@ -48,54 +48,62 @@
 <template name="projects">
 	<div id="your_projects" class="clearfix">
 		<h1 style="float: left;" class="">Your Projects</h1>
-		<button data-toggle="collapse" href="#addSensor">Add Project</button>
+		<button data-toggle="collapse" href="#addSensor" class="btn btn-default">Add Project</button>
 	</div>
 	{{> createProject}}
 	<div class="panel-group" id="accordion">
 		{{#each projects}}
-			<div class="panel panel-default">
+			<div class="panel panel-default project">
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordion" href="#{{_id}}">{{name}}</a>
 					</h3>
 				</div>
+				
 				<div id="{{_id}}" class="panel-collapse collapse">
 					<div class="panel-body 1indent">
 						<h4>Sensors: </h4>
-							{{#each sensors parent=_id}}
-								<h5 class="2indent"><a data-toggle="collapse" href="#{{_id}}">{{name}}</a></h5>
-								<div id="{{_id}}" class="panel-collapse collapse">
-									<p class="3indent">Sensor Type: {{sensorType}}</p>
-									<p class="3indent">Pins: {{pin}}</p>
-									<p class="3indent">Last Recieved Data: (TODO)</p>
-									<p class="3indent"><a data-toggle="collapse" href="#{{_id}}_data">Data</a></p>
-									<div id="{{_id}}_data" class="panel-collapse collapse">
-										<div id="{{_id}}_graph" style="width:100%; height:400px;"></div>
-											<script type="text/javascript">
-												$(function () { 
-													var readings = Readings.find({parentId: '{{_id}}'}).fetch();
-													var newArray = [];
-													$.each(readings, function (index, value) {
-														newArray[index] = value.data;
-													});
-
-												    $('#{{_id}}_graph').highcharts({
-												        chart: {
-												            type: 'line'
-												        },
-												        title: {
-												            text: 'Data Recieved'
-												        },
-												        series: [{
-												            name: '{{name}}',
-												            data: newArray
-												        }]
-												    });
+						{{#each sensors parent=_id}}
+						<div class="well">
+							<h5 class="2indent"><a data-toggle="collapse" href="#{{_id}}">{{name}}</a></h5>
+							<div id="{{_id}}" class="panel-collapse collapse">
+								<p class="3indent">Sensor Type: {{sensorType}}</p>
+								<p class="3indent">Pins: {{pins}}</p>
+								<!-- <p class="3indent">Last Recieved Data: (TODO)</p> -->
+								<p class="3indent"><a data-toggle="collapse" href="#{{_id}}_data">Data</a></p>
+								<div id="{{_id}}_data" class="panel-collapse collapse">
+									<div id="{{_id}}_graph" style="width:100%; height:400px;"></div>
+										<script type="text/javascript">
+											$(function () { 
+												var readings = Readings.find({parentId: '{{_id}}'}).fetch();
+												var newArray = [];
+												//console.log(readings);
+												$.each(readings, function (index, value) {
+													//console.log(value.data)
+													newVal = parseInt(value.data)
+													if (!isNaN(newVal))
+														newArray[index] = newVal;
 												});
-											</script>
-									</div>
+												console.log(newArray);
+											    $('#{{_id}}_graph').highcharts({
+											        chart: {
+											            type: 'line'
+											        },
+											        title: {
+											            text: 'Data Recieved'
+											        },
+											        series: [{
+											            name: '{{name}}',
+											            data: newArray
+											        }, 
+											       	]
+											    });
+											});
+										</script>
 								</div>
-							{{/each}}
+							</div>
+						</div>
+						{{/each}}
 							<table id="sensorTable">
 								<tr class="control-group" id="sensor_form_{{_id}}">
 									<td><input type="text" name="sensorName" id="sensor_form_name_{{_id}}" placeholder="Sensor Name"></td>
@@ -110,7 +118,7 @@
 									</td>
 									<td>
 										<span id={{_id}}>
-											<button id="add_sensor_{{_id}}">Add Sensor</button>
+											<button id="add_sensor_{{_id}}" class="btn btn-default" style="margin-top: -10px">Add Sensor</button>
 										</span>
 									</td>
 								</tr>
@@ -131,7 +139,7 @@
 	        		<input type="text" id="project_name" placeholder="Project Name">
 	      		</div>
     		</div>
-    		<button id="check_name">Check Name</button>
+    		<button id="check_name" class="btn btn-default">Check Name</button>
     	</form>
 
 <!-- 		<input type="text" name="projectName" id="project_name" class="span6" placeholder="Project Name">  
