@@ -2,27 +2,31 @@ Projects = new Meteor.Collection("projects");
 Sensors = new Meteor.Collection("sensors");
 Readings = new Meteor.Collection("readings");
 
-var Schemas = {};
+// THE LINE BELOW SHOULD BE COMMENTED OUT!
+//SimpleSchema.debug = true;
+
+Schemas = {};
 
 Schemas.project = new SimpleSchema({
-  // _id: {
-  //   type: String,
-  //   label: "_id"
-  // },
   name: {
     type: String,
     label: "Name"
   },
-  owner: {
-    type: Object,
-    label: "Owner"
-  }
+  owner: { //<-- This gets inserted manually in Meteor.methods
+    type: String,
+    label: "Owner",
+    autoValue: function() {
+      if(Meteor.isServer){
+        console.log(Meteor.user());
+        return Meteor.user()._id;
+      }
+      else{
+        return Session.get("currentUser")._id;
+      }
+    }
+ }
 });
 Schemas.sensor = new SimpleSchema({
-  // _id: {
-  //   type: String,
-  //   label: "_id"
-  // },
   name: {
     type: String,
     label: "Name"
@@ -32,7 +36,7 @@ Schemas.sensor = new SimpleSchema({
     label: "Owner"
   },
   parentProject: {
-    type: Schemas.project,
+    type: String
   },
   sensorType: {
     type: String,

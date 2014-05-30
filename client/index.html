@@ -1,17 +1,11 @@
+
 <head>
   <title>WebDuino</title>
   <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
   <script src="http://code.highcharts.com/modules/exporting.js"></script>
-  <script type="text/javascript">
-	 //  	function addSensor () {
-	 //  		var sensorName = $('#sensorName').val();
-	 //  		var sensorType = $('#sensorType').val();
-	 // 	 	var pins = $("#pins").val();
-	 //  		console.log("stuff")
-	 //  		$('#sensorTable').prepend("<tr><td>" + sensorName + "</td><td>" + sensorType + "</td><td>" + pins + "</td>");
-		// }
+  <script>
 
-	</script>
+  </script>
 </head>
 
 <body>
@@ -24,6 +18,12 @@
 		{{/if}}
 	</div>
 </body>
+
+<template name="header">
+	<div id="header">
+		{{> loginButtons}}
+	</div>
+</template>
 
 <template name="home">
   <h1>Welcome to Webduino!</h1>
@@ -39,13 +39,36 @@
   <p>Users create projects that contain sensors recognized by Webduino and it then generates arduino code that can be directly placed into you projects. The code sends you data to our web server that is then stored and can be read at any time within the web interface.</p>
 </template>
 
-<template name="header">
-	<div id="header">
-		{{> loginButtons}}
-	</div>
+<template name="projects">
+	<h3>Your Projects</h3>
+	{{#each projects}}
+	<div class="projectContainer">
+		<a class="projectLabel">{{name}}</a>
+		<div class="project collapse in">
+			<div class="well" data-id="{{_id}}">
+				{{> sensors parent=_id}}
+			</div>
+		</div>
+	</div>	
+	{{/each}}
+
+	{{#autoForm schema=projectFormSchema id="insertProjectForm" type="method" meteormethod="insertProject"}}
+		<fieldset>
+			{{> afQuickField name="name"}}
+		</fieldset>
+		<button type="submit" class="btn btn-primary">Insert</button>
+	{{/autoForm}}
+	<!-- {{> quickForm schema=projectFormSchema id="insertProjectForm" type="method" meteorMethod="insertProject"}} -->
 </template>
 
-<template name="projects">
+<template name="sensors">
+	{{#each sensors}}
+		<p>{{name}}</p>
+	{{/each}}
+	{{> quickForm schema=sensorFormSchema id="insertSensorForm" type="method" meteormethod="insertSensor" omitFields="owner,parentProject"}}
+</template>
+
+<template name="projects-old">
 	<div id="your_projects" class="clearfix">
 		<h1 style="float: left;" class="">Your Projects</h1>
 		<button data-toggle="collapse" href="#addSensor" class="btn btn-default">Add Project</button>
@@ -127,40 +150,6 @@
 				</div>
 			</div>
 		{{/each}}
-	</div>
-</template>
-
-<template name="createProject">
-	<div id="addSensor" class="panel-collapse collapse control-group">
-		<form class="form-horizontal">
-   			<div class="control-group span6">
-      		<label class="control-label" for="project_name">Please input a project name: </label>
-	      		<div class="controls">
-	        		<input type="text" id="project_name" placeholder="Project Name">
-	      		</div>
-    		</div>
-    		<button id="check_name" class="btn btn-default">Check Name</button>
-    	</form>
-
-<!-- 		<input type="text" name="projectName" id="project_name" class="span6" placeholder="Project Name">  
-		<button id="check_name">Check Name</button> -->
-
-<!-- 		<table id="sensorTable">
-			<tr>
-				<td><input type="text" name="sensorName" id="sensorName" placeholder="Sensor Name"></td>
-				<td><select class="form-control" id="sensorType" name="sensorType">
-					<option>Potentiometer</option>
-					<option>Accelerometer</option>
-				</select></td>
-				<td><input type="text" name="pins" id="pins" placeholder="Pins (Ex. 1 2 3)"></td>
-				<td><button onclick="addSensor()">Add Sensor</button></td>
-			</tr>
-			{{#each sensorArray}}
-			<tr>
-				<td>{{sensorName}}</td><td>{{sensorType}}</td><td>sensorPins</td>
-			</tr>
-			{{/each}}
-		</table> -->
 	</div>
 </template>
 

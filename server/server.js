@@ -1,19 +1,31 @@
-Meteor.startup(function(){
-  // Readings belong to Sensors which belong to Projects
-  Projects = new Meteor.Collection("projects");
-  Sensors = new Meteor.Collection("sensors");
-  Readings = new Meteor.Collection("readings");
-});
-
 // Publish the user's projects, sensors, and readings to them 
 Meteor.publish("projects", function(){
-  return Projects.find({owner: Meteor.user()});
+  return Projects.find({owner: this.userId});
 });
 Meteor.publish("sensors", function(){
-  return Sensors.find({owner: Meteor.user()});
+  return Sensors.find({owner: this.userId});
 });
 Meteor.publish("readings", function(){
-  return Readings.find({owner: Meteor.user()});
+  return Readings.find({owner: this.userId});
+});
+
+Meteor.methods({
+  // expects an object with a name field
+  insertProject: function(doc){
+    Schemas.project.clean(doc);     //clean the object coming from autoform
+    check(doc, Schemas.project);    //check it against the schema
+    if (this.userId){               //if there is a user logged in
+      var newProject = {
+        name: doc.name,
+        owner: this.userId
+      }
+      console.log("The new project object: ")
+      console.log(newProject);
+      Projects.insert(newProject);
+      return true;
+    }
+    return false;
+  }
 });
 
 // Our API access point for the moment

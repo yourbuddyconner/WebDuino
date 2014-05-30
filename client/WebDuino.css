@@ -36,6 +36,11 @@ body {
 #your_projects button{
 	margin: 20px 0 0 50px;
 }
+.projectLabel{
+	text-decoration: none;
+	color: black;
+	font-size: 20px;
+}
 #sensorList {
 	border-radius: 4px;
 	width: 80%;
