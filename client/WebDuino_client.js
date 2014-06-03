@@ -1,6 +1,5 @@
 // subscribe to the user's projects, sensors, and readings
 Meteor.subscribe("projects");
-Meteor.subscribe("sensors");
 Meteor.subscribe("readings");
 
 Deps.autorun(function(){
@@ -10,9 +9,6 @@ Deps.autorun(function(){
 
 Template.projects.projects = function () {
   return Projects.find({owner: Session.get("currentUser")._id});
-}
-Template.sensors.sensors = function () {
-  return Sensors.find({parentId: Template.sensors.parent});
 }
 Template.projects.sensorData = function (parent) {
   return Readings.find({parentId: parent.hash.parent}).fetch();
@@ -27,11 +23,6 @@ Template.projects.helpers({
     return Schemas.project;
   }
 });
-Template.sensors.helpers({
-  sensorFormSchema: function(){
-    return Schemas.sensor;
-  }
-});
 
 //Template event handlers
 // Template.projects.events = {
@@ -41,7 +32,9 @@ Template.sensors.helpers({
 // };
 
 //Template render code
-Template.projects.rendered = function(){  
+Template.projects.rendered = function(){ 
+  window.setTimeout(300);
+  var proj = $(".project");
   var labels = $(".projectLabel");
   var targ;
   for (var i=0; i<labels.length; i++){

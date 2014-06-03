@@ -41,12 +41,16 @@
 
 <template name="projects">
 	<h3>Your Projects</h3>
+	{{! Iterate over all the projects that a user owns}}
 	{{#each projects}}
 	<div class="projectContainer">
 		<a class="projectLabel">{{name}}</a>
-		<div class="project collapse in">
+		<div class="project collapse">
 			<div class="well" data-id="{{_id}}">
-				{{> sensors parent=_id}}
+					{{#each sensors}}
+						<p>{{name}}</p>
+						<p>{{type}}</p>
+					{{/each}}
 			</div>
 		</div>
 	</div>	
@@ -58,14 +62,6 @@
 		</fieldset>
 		<button type="submit" class="btn btn-primary">Insert</button>
 	{{/autoForm}}
-	<!-- {{> quickForm schema=projectFormSchema id="insertProjectForm" type="method" meteorMethod="insertProject"}} -->
-</template>
-
-<template name="sensors">
-	{{#each sensors}}
-		<p>{{name}}</p>
-	{{/each}}
-	{{> quickForm schema=sensorFormSchema id="insertSensorForm" type="method" meteormethod="insertSensor" omitFields="owner,parentProject"}}
 </template>
 
 <template name="projects-old">

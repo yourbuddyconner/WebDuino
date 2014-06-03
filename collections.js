@@ -1,5 +1,5 @@
 Projects = new Meteor.Collection("projects");
-Sensors = new Meteor.Collection("sensors");
+//Sensors = new Meteor.Collection("sensors");
 Readings = new Meteor.Collection("readings");
 
 // THE LINE BELOW SHOULD BE COMMENTED OUT!
@@ -16,36 +16,26 @@ Schemas.project = new SimpleSchema({
     type: String,
     label: "Owner",
     autoValue: function() {
-      if(Meteor.isServer){
-        console.log(Meteor.user());
-        return Meteor.user()._id;
+      try{
+        //return Meteor.user()._id;
       }
-      else{
-        return Session.get("currentUser")._id;
+      catch(e){
+        console.log(e);
+        return ""
       }
     }
- }
-});
-Schemas.sensor = new SimpleSchema({
-  name: {
-    type: String,
-    label: "Name"
   },
-  owner: {
-    type: Object,
-    label: "Owner"
+  sensors: {
+    type: [Object],
+    minCount: 0,
+    optional: true
   },
-  parentProject: {
+  "sensors.$.name": {
     type: String
   },
-  sensorType: {
-    type: String,
-    label: "Sensor Type"
+  "sensors.$.type": {
+    type: String
   }
-  // Implement this later, no need for it right now though
-  // pins: {
-  //   type: [int],
-  // }
 });
 Schemas.reading = new SimpleSchema({
   // _id: {
@@ -75,5 +65,4 @@ Schemas.reading = new SimpleSchema({
 });
 
 Projects.attachSchema(Schemas.project);
-Sensors.attachSchema(Schemas.sensor);
 Readings.attachSchema(Schemas.reading);

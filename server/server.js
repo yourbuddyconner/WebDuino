@@ -2,9 +2,6 @@
 Meteor.publish("projects", function(){
   return Projects.find({owner: this.userId});
 });
-Meteor.publish("sensors", function(){
-  return Sensors.find({owner: this.userId});
-});
 Meteor.publish("readings", function(){
   return Readings.find({owner: this.userId});
 });
