@@ -34,7 +34,34 @@ Meteor.startup( function(){
 			]
 		}
 		console.log(newProject);
-		Projects.insert(newProject);
-		console.log("Database Seeded! Do your worst.")
+		var projectId = Projects.insert(newProject);
+	}
+	if(Readings.find().count() === 0){
+		var newReading1 = {
+			owner: admin._id,
+			parentProject: projectId,
+			sensorName: newProject.sensors[0].name,
+			timestamp: 0,
+			data: 0
+		};
+		var newReading2 = {
+			owner: admin._id,
+			parentProject: projectId,
+			sensorName: newProject.sensors[1].name,
+			timestamp: 0,
+			data: 1
+		};
+		function getRandomInt(min, max) {
+  			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+		for(var i=0; i<30; i++){
+			newReading1.data = getRandomInt(1, 100);
+			newReading2.data = newReading2.data+2;
+			newReading1.timestamp = new Date();
+			newReading2.timestamp = new Date();
+			Readings.insert(newReading1);
+			Readings.insert(newReading2);
+		}
+	console.log("Database Seeded! Do your worst.")
 	}
 });

@@ -1,5 +1,4 @@
 Projects = new Meteor.Collection("projects");
-//Sensors = new Meteor.Collection("sensors");
 Readings = new Meteor.Collection("readings");
 
 // THE LINE BELOW SHOULD BE COMMENTED OUT!
@@ -42,25 +41,24 @@ Schemas.reading = new SimpleSchema({
   //   type: String,
   //   label: "_id"
   // },
-  name: {
-    type: String,
-    label: "Name"
-  },
   owner: {
-    type: Object,
-    label: "Owner"
+    type: String
   },
-  parentSensor: {
-    type: Schemas.sensor,
-    label: "sensor this reading belongs to"
+  parentProject: {
+    type: String,
+    label: "ID of the project this reading belongs to"
+  },
+  sensorName: {
+    type: String,
+    label: "Name of the parent sensor in project.sensors"
   },
   timestamp: {
     type: Date,
     label: "when this reading was saved to the database"
   },
   data: {
-    type: [Number],
-    label: "values passed from the Arduino"
+    type: Number,
+    label: "value passed from the Arduino"
   }
 });
 

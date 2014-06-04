@@ -1,22 +1,11 @@
-
 <head>
 	<title>WebDuino - Making Your Arduino Smarter</title>
 	<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-	<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
-	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+	</script>
 </head>
-
-<body>
-	<div id="container">
-		{{> header}}
-		{{#if currentUser}}
-			{{> projects}}
-		{{else}}
-			{{> home}}
-		{{/if}}
-		{{> footer}}
-	</div>
-</body>
 
 <template name="header">
 	<header>
@@ -32,6 +21,18 @@
 	</header>
 </template>
 
+<template name="main">
+	<div id="container">
+		{{> header}}
+		{{#if currentUser}}
+			{{> projects}}
+		{{else}}
+			{{> home}}
+		{{/if}}
+		{{> footer}}
+	</div>
+</template>
+
 <template name="home">
 	<div id="home" class="wrapper">
 		<h1>Welcome to Webduino!</h1>
@@ -45,7 +46,7 @@
 
 		<h3>How it works?</h3>
 		<p>Users create projects that contain sensors recognized by Webduino and it then generates arduino code that can be directly placed into you projects. The code sends you data to our web server that is then stored and can be read at any time within the web interface.</p>
-	 </div>
+	</div>
 </template>
 
 <template name="projects">
@@ -56,48 +57,38 @@
 	</div>
 	<div id="banner">
 		<div class="wrapper">
+		<div class="accordion" id="projectsAccordion">
+			<div class="accordion-group">
 		{{#each projects}}
-			<section class="introduction">
-				<h3 class="bigGrey">{{name}}</h3>
-				<div class="sensorList">
-					<div class="sensorTitle">
-						<h4 class="pull-left">Sensors</h4>
-						<span class="badge pull-right">1</span>
-					</div>
-					{{#each sensors}}
-						<div class="sensor well">
-							<h5>{{name}}</h5>
-							<p>Sensor Type: {{type}}</p>
-							<p>Last Report: 4:30 3/24/2014</p>
-						</div>
-					{{/each}}
-				</div>
-			</section>
-			<section class="video">
-				<a href="#"><img src="http://placehold.it/380x220" alt="image-placeholder" /></a>
-			</section>
-			<div class="clear"></div>
+				<div class="accordion-heading">
+      				<a class="accordion-toggle" data-toggle="collapse" data-parent="#projectsAccordion" data-id="{{_id}}" href="#{{_id}}">
+        				{{name}}
+      				</a>
+      			</div>
+				<div id="{{_id}}" class="accordion-body collapse">
+			    	<div class="accordion-inner">
+						{{#each sensors}}
+							<div class="sensor well" data-name="{{name}}">
+								<h5>{{name}}</h5>
+								<p>Sensor Type: {{type}}</p>
+								<p>Last Report: 4:30 3/24/2014</p>
+							</div>
+						{{/each}}
+			    	</div>
+			    </div>
 		{{/each}}
-		</div>
-	</div>
-
-	<!-- <h3>Your Projects</h3>
-	{{! Iterate over all the projects that a user owns}}
-	{{#each projects}}
-	<div class="projectContainer">
-		<a class="projectLabel">{{name}}</a>
-		<div class="project collapse">
-			<div class="well" data-id="{{_id}}">
-					{{#each sensors}}
-						<p>{{name}}</p>
-						<p>{{type}}</p>
-					{{/each}}
 			</div>
 		</div>
-	</div>	
-	{{/each}} -->
-
-
+			<section class="graph">
+				<div id="graph">
+					<img src="http://placehold.it/700x200">
+				</div>
+			</section>
+			<div class="graphOptions hidden">
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
 <!-- 	{{#autoForm schema=projectFormSchema id="insertProjectForm" type="method" meteormethod="insertProject"}}
 		<fieldset>
 			{{> afQuickField name="name"}}
