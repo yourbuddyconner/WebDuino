@@ -1,6 +1,7 @@
 {
   "packages": {
     "iron-router": {},
-    "collection2": {}
+    "collection2": {},
+    "auto-nprogress": {}
   }
 }
