@@ -1,19 +1,43 @@
 /* Conner's Code Here */
+.bigRed{
+	font-size: 2.75em;
+	font-weight: 300;
+	color: #f23f54;
+	line-height: 2em;
+}
+.bigGrey{
+	font-size: 2.5em;
+	font-weight: 200;
+	color: #0a0a0a;
+	padding-top: 30px;
+}
 #login-buttons{
 	float: right;
-	margin: 30px 75px 0 0;
+	margin: 20px 75px 0 0;
 }
 
 .sensorTitle {
 	display: inline-block;
 }
-
+.modalFormContainer {
+	max-height: 400px;
+	overflow: scroll;
+}
 #projectsAccordion {
 	float: left;
 	width: 300px;
 	margin: 20px 0;
 }
 
+#sensorList{
+	max-height: 300px;
+	overflow: scroll;
+}
+
+.sensor{
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
 /* Other Code */
 body {
 	background: #fff;
@@ -35,7 +59,7 @@ body {
 header {
 	background: #f23f54;
 	color: #fff;
-	height: 100px;
+	height: 50px;
 }
 
 header h1 {
@@ -43,7 +67,7 @@ header h1 {
 	font-size: 1.5em;
 	float: left;
 	display: inline-block;
-	margin: 28px 0 0 0;
+	margin: 7px 0 0 0;
 }
 
 header p {
@@ -88,26 +112,13 @@ header form input[type=button]:hover {
 
 #banner {
 	background: #f4f7f9;
-	min-height: 425px;
-	max-height: 500px;
+	height: 500px;
 }
 
 #banner .introduction {
 	float: left;
 }
 
-.bigRed{
-	font-size: 3.6em;
-	font-weight: 300;
-	color: #f23f54;
-	line-height: 2em;
-}
-.bigGrey{
-	font-size: 2.5em;
-	font-weight: 200;
-	color: #0a0a0a;
-	padding-top: 30px;
-}
 #banner p {
 	font-size: 1.2em;
 	font-weight: 300;
@@ -139,13 +150,12 @@ header form input[type=button]:hover {
 }
 
 #banner .graph {
-	width: 65%;
+	width: 60%;
 	float: right;
 	margin: 70px 0 0 0;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
-	background-color: #353b42;
 	-webkit-box-shadow: 0 1px 7px rgba(0,0,0,.4);
 	-moz-box-shadow: 0 1px 7px rgba(0,0,0,.4);
 	box-shadow: 0 1px 7px rgba(0,0,0,.4);
@@ -154,14 +164,14 @@ header form input[type=button]:hover {
 }
 
 #banner .graphOptions{
-	width: 65%;
+	width: 60%;
 	height: 50px;
 	float: right;
 	margin: 10px 0 0 0;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
-	background-color: #353b42;
+	background-color: #ccc;
 	-webkit-box-shadow: 0 1px 7px rgba(0,0,0,.4);
 	-moz-box-shadow: 0 1px 7px rgba(0,0,0,.4);
 	box-shadow: 0 1px 7px rgba(0,0,0,.4);
@@ -296,6 +306,9 @@ footer .copyright strong {
 	#banner .graph {
 		width: 55%;
 	}
+	#banner .graphOptions{
+		width: 55%;
+	}
 	#feature-section .description {
 		font-size: 80%;
 	}
@@ -324,10 +337,15 @@ footer .copyright strong {
 	#banner {
 		height: 560px;
 	}
-	#banner .graph {
+	#banner .graph{
 		width: 380px;
 		float: left;
 		margin-top: 40px;
+	}
+	#banner .graphOptions{
+		width: 380px;
+		float: left;
+		margin-top: 20px;
 	}
 	#feature-section .description, #feature-section.feature-right .description {
 		float: none;

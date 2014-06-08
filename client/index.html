@@ -67,8 +67,8 @@
         				{{name}}
       				</a>
       			</div>
-				<div id="{{_id}}" class="accordion-body collapse">
-			    	<div class="accordion-inner">
+				<div id="{{_id}}" class="yolo accordion-body collapse">
+			    	<div class="accordion-inner" id="sensorList">
 						{{#each sensors}}
 							<div class="sensor well" data-name="{{name}}">
 								<h5>{{name}}</h5>
@@ -76,9 +76,15 @@
 								<p>Last Report: 4:30 3/24/2014</p>
 							</div>
 						{{/each}}
+						<div class="well" id="addSensorButton">
+							<a id="addSensorButton"><h5>Add Sensor +</h5></a>
+						</div>
 			    	</div>
 			    </div>
 		{{/each}}
+				<div class="accordion-heading">
+					<a id="addProjectButton" class="accordion-toggle" href="#">Add a Project +</a>
+				</div>
 			</div>
 		</div>
 			<section class="graph">
@@ -91,12 +97,52 @@
 			<div class="clear"></div>
 		</div>
 	</div>
-<!-- 	{{#autoForm schema=projectFormSchema id="insertProjectForm" type="method" meteormethod="insertProject"}}
-		<fieldset>
+</template>
+
+<template name="projectModals">
+	<div id="projectModal" class="modal hide fade">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Create a New Project</h3>
+	  </div>
+		{{#autoForm collection="Projects" id="insertProjectForm" type="insert"}}
+		<div class="modal-body">
+			<fieldset>
+			<p>Please fill in the name for your new project and press "Save Changes"</p>
+			<br>
 			{{> afQuickField name="name"}}
-		</fieldset>
-		<button type="submit" class="btn btn-primary">Insert</button>
-	{{/autoForm}} -->
+			</fieldset>
+		</div>
+		<div class="modal-footer">
+		<button onclick="$('#projectModal').modal('hide')" class="btn">Close</button>
+		<button type="submit" class="btn btn-primary">Save</button>
+		</div>
+		{{/autoForm}}
+		</div>
+
+	<div id="sensorModal" class="modal hide fade">
+	  	<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3>Add a new Sensor</h3>
+		</div>
+			<div id="modalFormContainer">
+			{{#autoForm collection="Projects" doc=insertSensorDoc id="insertSensorForm" type="update"}}
+				<div class="modal-body">
+					<fieldset>
+						<p>Please fill in the name for your new project and press "Save Changes"</p>
+						<br>
+						{{> afQuickField name="name"}}
+						{{> afQuickField name="owner" value=currentUser._id type="hidden"}}
+						{{> afArrayField name="sensors" maxCount=1 minCount=1}}
+					</fieldset>
+					<div class="modal-footer">
+						<button onclick="$('#sensorModal').modal('hide')" class="btn">Close</button>
+						<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			{{/autoForm}}
+			</div>
+		</div>
 </template>
 
 <template name="footer">

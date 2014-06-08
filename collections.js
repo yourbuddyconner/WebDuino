@@ -2,7 +2,7 @@ Projects = new Meteor.Collection("projects");
 Readings = new Meteor.Collection("readings");
 
 // THE LINE BELOW SHOULD BE COMMENTED OUT!
-//SimpleSchema.debug = true;
+SimpleSchema.debug = true;
 
 Schemas = {};
 
@@ -15,12 +15,12 @@ Schemas.project = new SimpleSchema({
     type: String,
     label: "Owner",
     autoValue: function() {
-      try{
-        //return Meteor.user()._id;
+      if (this.value){
+        console.log("The owner is set to " + this.value)
+        return this.value
       }
-      catch(e){
-        console.log(e);
-        return ""
+      else{
+        return this.userId
       }
     }
   },
@@ -30,7 +30,7 @@ Schemas.project = new SimpleSchema({
     optional: true
   },
   "sensors.$.name": {
-    type: String
+    type: String,
   },
   "sensors.$.type": {
     type: String
