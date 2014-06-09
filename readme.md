@@ -13,12 +13,12 @@
 - ~~Add an "Add Project" and "Add Sensor" button and prompt, each should probably be a Bootstrap modal that pops over~~
 - Code up the logic to update a project with a new sensor, it's not as easy as I thought apparently...
 - Code the badge next to "Sensors" so it updates with the number of sensors with new readings
-- Add in chart options so you can modify the current chart on-the-fly
+- Add in chart options so you can modify the current chart on-the-fly (change scale, move left and right, show more or less points, etc.
 
 
 
 #### Home Page
-- Redesign the home template, it looks like shit and should do something. 
+- ~~Redesign the home template, it looks like shit and should do something.~~
 
 ##### Extra Credit 
 - Add [animate.css](http://daneden.github.io/animate.css/) for cool animations when doing things. 

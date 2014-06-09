@@ -38,36 +38,144 @@
 	margin-top: 7px;
 	margin-bottom: 7px;
 }
-/* Other Code */
-body {
+header h1 small {
+	font-size: 75%;
+}
+/* Templates.Home CSS Here */
+#home-banner {
+	background: #f4f7f9;
+	height: 80px;
+}
+
+#home-banner .introduction {
+	float: left;
+}
+
+#home-banner h2 {
+	font-size: 3.6em;
+	font-weight: 300;
+	color: #f23f54;
+	padding-top: 10px;
+}
+
+#home-banner p {
+	font-size: 1.2em;
+	font-weight: 300;
+}
+
+
+#home-banner .video {
+	float: right;
+	margin: 70px 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background-color: #353b42;
+	-webkit-box-shadow: 0 1px 7px rgba(0,0,0,.4);
+	-moz-box-shadow: 0 1px 7px rgba(0,0,0,.4);
+	box-shadow: 0 1px 7px rgba(0,0,0,.4);
+	border: solid 3px #fff;
+	padding-bottom: -5px;
+}
+
+#home-banner .video img {
+	display: block;
+}
+#feature-section {
+	min-height: 500px;
+}
+
+#feature-section h3 {
+	color: #f23f54;
+	font-weight: 300;
+	font-size: 1.8em;
+	padding: 60px 0 10px 0;
+}
+
+#feature-section p{
+	margin-bottom: 20px;
+	font-size: 1.1em;
+	line-height: 1.5;
+}
+
+#feature-section .description {
+	float: left;
+	width: 50%;
+}
+
+#feature-section .image {
+	float: right;
+	width: 381px;
+	position: relative;
+	height: 500px;
+	overflow: hidden;
+}
+
+#feature-section .image img {
+	position: absolute;
+	bottom: -140px;
+}
+
+#feature-section .image img:hover {
+	position: absolute;
+	bottom: 0px;
+}
+
+#feature-section .image img {
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+}
+
+.feature-left {
 	background: #fff;
-	font-family: 'Oxygen', sans-serif;
+}
+
+.feature-right {
+	background: #f4f7f9;
+}
+
+#feature-section.feature-right .description {
+	float: right;
+}
+#feature-section.feature-right .image {
+	float: left;
+}
+
+a.wide-button {
+	background: #f23f54;
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	padding: 20px 0;
+	width: 100%;
+	margin: 70px 0;
+	text-align: center;
+	font-size: 1.5em;
 	font-weight: 400;
-	color: #353b42;
 }
 
-.wrapper {
-	width: 85%;
-	max-width: 1024px;
-	margin: 0 auto;
+a.wide-button:hover {
+	background: #f9495e;
 }
 
-.clear {
-	clear: all;
+a.wide-button:active {
+	background: #ea3d51;
 }
-
+/* Templates.Header Code */
 header {
 	background: #f23f54;
 	color: #fff;
-	height: 50px;
+	height: 75px;
 }
 
 header h1 {
 	font-weight: 700;
-	font-size: 1.5em;
+	font-size: 2.2em;
 	float: left;
 	display: inline-block;
-	margin: 7px 0 0 0;
+	margin: 15px 0 0 0;
 }
 
 header p {
@@ -109,6 +217,24 @@ header form input[type=button] {
 header form input[type=button]:hover {
 	background: #f4f7f9;
 }
+/* Mostly Templates.Projects Code, bunch of common code is in here too though */
+body {
+	background: #fff;
+	font-family: 'Oxygen', sans-serif;
+	font-weight: 400;
+	color: #353b42;
+}
+
+.wrapper {
+	width: 85%;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
+.clear {
+	clear: all;
+}
+
 
 #banner {
 	background: #f4f7f9;
@@ -183,88 +309,7 @@ header form input[type=button]:hover {
 	display: block;
 }
 
-#feature-section {
-	min-height: 500px;
-}
 
-#feature-section h3 {
-	color: #f23f54;
-	font-weight: 300;
-	font-size: 1.8em;
-	padding: 100px 0 10px 0;
-}
-
-#feature-section p{
-	margin-bottom: 20px;
-	font-size: 1.1em;
-	line-height: 1.5;
-}
-
-#feature-section .description {
-	float: left;
-	width: 50%;
-}
-
-#feature-section .image {
-	float: right;
-	width: 381px;
-	position: relative;
-	height: 500px;
-	overflow: hidden;
-}
-
-#feature-section .image img {
-	position: absolute;
-	bottom: -140px;
-}
-
-#feature-section .image img:hover {
-	position: absolute;
-	bottom: 0px;
-}
-
-#feature-section .image img {
-	-webkit-transition: all 1s ease-in-out;
-	-moz-transition: all 1s ease-in-out;
-	-o-transition: all 1s ease-in-out;
-	transition: all 1s ease-in-out;
-}
-
-.feature-left {
-	background: #fff;
-}
-
-.feature-right {
-	background: #f4f7f9;
-}
-
-#feature-section.feature-right .description {
-	float: right;
-}
-#feature-section.feature-right .image {
-	float: left;
-}
-
-a.wide-button {
-	background: #f23f54;
-	display: block;
-	color: #fff;
-	text-decoration: none;
-	padding: 20px 0;
-	width: 100%;
-	margin: 70px 0;
-	text-align: center;
-	font-size: 1.5em;
-	font-weight: 400;
-}
-
-a.wide-button:hover {
-	background: #f9495e;
-}
-
-a.wide-button:active {
-	background: #ea3d51;
-}
 
 ul#social-links {
 	width: 340px;
