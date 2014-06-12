@@ -1,6 +1,6 @@
 /* Conner's Code Here */
 .bigRed{
-	font-size: 2.75em;
+	font-size: 1.75em;
 	font-weight: 300;
 	color: #f23f54;
 	line-height: 2em;
@@ -16,31 +16,27 @@
 	margin: 20px 75px 0 0;
 }
 
-.sensorTitle {
-	display: inline-block;
-}
-.modalFormContainer {
-	max-height: 400px;
-	overflow: scroll;
-}
-#projectsAccordion {
-	float: left;
-	width: 300px;
-	margin: 20px 0;
-}
-
-#sensorList{
-	max-height: 300px;
-	overflow: scroll;
-}
-
-.sensor{
-	margin-top: 7px;
-	margin-bottom: 7px;
-}
 header h1 small {
 	font-size: 75%;
 }
+/* Common CSS Here */
+body {
+	background: #fff;
+	font-family: 'Oxygen', sans-serif;
+	font-weight: 400;
+	color: #353b42;
+}
+
+.wrapper {
+	width: 85%;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
+.clear {
+	clear: all;
+}
+
 /* Templates.Home CSS Here */
 #home-banner {
 	background: #f4f7f9;
@@ -167,12 +163,12 @@ a.wide-button:active {
 header {
 	background: #f23f54;
 	color: #fff;
-	height: 75px;
+	height: 60px;
 }
 
 header h1 {
 	font-weight: 700;
-	font-size: 2.2em;
+	font-size: 2em;
 	float: left;
 	display: inline-block;
 	margin: 15px 0 0 0;
@@ -218,23 +214,39 @@ header form input[type=button]:hover {
 	background: #f4f7f9;
 }
 /* Mostly Templates.Projects Code, bunch of common code is in here too though */
-body {
-	background: #fff;
-	font-family: 'Oxygen', sans-serif;
-	font-weight: 400;
-	color: #353b42;
+
+	/* CSS for the Modals */
+.modalFormContainer{
+	margin: 10px 10px 10px 10px;
+}
+.modalFormContainer input{
+	margin: 0px;
+}
+.modalFormContainer form{
+	margin-bottom: 10px;
+}
+.sensorTitle {
+	display: inline-block;
+}
+.modalFormContainer {
+	max-height: 400px;
+	overflow: scroll;
+}
+#projectsAccordion {
+	float: left;
+	width: 275px;
+	margin: 20px 0;
 }
 
-.wrapper {
-	width: 85%;
-	max-width: 1024px;
-	margin: 0 auto;
+#sensorList{
+	max-height: 300px;
+	overflow: scroll;
 }
 
-.clear {
-	clear: all;
+.sensor{
+	margin-top: 7px;
+	margin-bottom: 7px;
 }
-
 
 #banner {
 	background: #f4f7f9;
@@ -276,6 +288,8 @@ body {
 }
 
 #banner .graph {
+	min-height: 200px;
+	text-align: center;
 	width: 60%;
 	float: right;
 	margin: 70px 0 0 0;
@@ -309,6 +323,10 @@ body {
 	display: block;
 }
 
+#banner .graph h2 {
+	margin: 75px 0 0 0;
+	color: #ccc;
+}
 
 
 ul#social-links {

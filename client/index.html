@@ -63,9 +63,9 @@
 			<section class="description">
 				<h3>How Does It Work?</h3>
 				<p>Setup is easy, once you've created an account you can configure how many sensors you have and where they will go, WebDuino will then generate code on-the-fly based on your project, code that is then pasted directly into your Arduino Sketch. Your Arduino board then sends the sensor data to WebDuino via HTTP and it is read, stored, and potentially reacted to at any time within the web interface.</p>
-				
+
 				<h3>How Can It Help Me?</h3>
-				<p>WebDuino frees you from having to program your own server to record data from your arduino, giving more freedom to hobby and weekend projects.</p>
+				<p>WebDuino frees you from having to set up your own web server to record data from your arduino, giving more freedom to hobby and weekend projects.</p>
 			</section>
 			<section class="image">
 				<img src="images/sample-image.png" alt="sample image" />
@@ -97,11 +97,11 @@
       			</div>
 				<div id="{{_id}}" class="yolo accordion-body collapse">
 			    	<div class="accordion-inner" id="sensorList">
-						{{#each sensors}}
-							<div class="sensor well" data-name="{{name}}">
+						{{#each sensors parent=_id}}
+							<div class="sensor well" data-name="{{name}}" data-id="{{_id}}">
 								<h5>{{name}}</h5>
 								<p>Sensor Type: {{type}}</p>
-								<p>Last Report: 4:30 3/24/2014</p>
+								<!-- <p>Last Report: 4:30 3/24/2014</p> -->
 							</div>
 						{{/each}}
 						<div class="well" id="addSensorButton">
@@ -117,8 +117,8 @@
 		</div>
 			<section class="graph">
 				<div id="graph">
-					<img src="http://placehold.it/700x200">
 				</div>
+				<h2 id="noSensor">No Sensor Loaded :(</h2>
 			</section>
 			<div class="graphOptions hidden">
 			</div>
@@ -153,24 +153,27 @@
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		    <h3>Add a new Sensor</h3>
 		</div>
-			<div id="modalFormContainer">
-			{{#autoForm collection="Projects" doc=insertSensorDoc id="insertSensorForm" type="update"}}
-				<div class="modal-body">
-					<fieldset>
-						<p>Please fill in the name for your new project and press "Save Changes"</p>
-						<br>
-						{{> afQuickField name="name"}}
-						{{> afQuickField name="owner" value=currentUser._id type="hidden"}}
-						{{> afArrayField name="sensors" maxCount=1 minCount=1}}
-					</fieldset>
-					<div class="modal-footer">
-						<button onclick="$('#sensorModal').modal('hide')" class="btn">Close</button>
-						<button type="submit" class="btn btn-primary">Save</button>
-					</div>
+		<div class="modalFormContainer">
+			<form role="form" class="form-inline" id="newSensorForm">  
+				<div class="control-group">
+					<input type="text" id="sensorName" placeholder="Name">
+					<select id="sensorType">
+						<option value="">Select One:</option>
+						<option value="Potentiometer">Potentiometer</option>
+						<option value="Photoresistor">Photoresistor</option>
+						<option value="Temperature">Temperature</option>
+					</select>
+					<br>				
+					<span class="help-text" id="sensorHelpText"></span>
 				</div>
-			{{/autoForm}}
-			</div>
+			</form>
+			<button class="btn" onClick="alert('Not Implemented.')">Add Another +</button>
 		</div>
+		<div class="modal-footer">
+			<button onclick="$('#sensorModal').modal('hide')" class="btn">Close</button>
+			<button type="submit" id="submitSensor" class="btn btn-primary">Save</button>
+		</div>
+	</div>
 </template>
 
 <template name="footer">

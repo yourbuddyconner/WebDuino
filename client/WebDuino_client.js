@@ -1,6 +1,7 @@
 // subscribe to the user's projects, sensors, and readings
 Meteor.subscribe("projects");
 Meteor.subscribe("readings");
+Meteor.subscribe("sensors");
 
 // Client-Side Routes
 Router.map(function () {
@@ -19,7 +20,7 @@ Deps.autorun(function(){
   Session.set("currentUser", Meteor.user());
 });
 
-//Autoform Stuff
+//Autoform Debugging Code
 AutoForm.addHooks(['insertSensorForm', 'insertProjectForm'], {
   after: {
     insert: function(error, result) {
@@ -29,11 +30,11 @@ AutoForm.addHooks(['insertSensorForm', 'insertProjectForm'], {
         console.log("Insert Result:", result);
       }
     },
-    update: function(error) {
+    update: function(error, result) {
       if (error) {
         console.log("Update Error:", error);
       } else {
-        console.log("Updated!");
+        console.log("Updated!", result);
       }
     },
     remove: function(error) {
@@ -49,11 +50,23 @@ AutoForm.addHooks(['insertSensorForm', 'insertProjectForm'], {
 //   console.log("Current Project: " + Session.get("currentProject"));
 // })
 
-// Populates and daws graph in the Template.projects
+/*
+  Populates and daws graph in the Template.projects
+  WARNING: Janky Code Ahead
+
+  The graph relies on multiple Session variables:
+    "NumberOfReadings"
+*/
 Deps.autorun(function() {
   if(Session.get("currentTemplate") == "projects" && Session.get("currentProject") && Session.get("currentSensor")){
+    // Set all the variables if we havent set up the graph yet
     if(!Session.get("GraphIsSetup")){
-      $(".graphOptions").toggleClass("hidden")
+      // show graph options and hide the "No Sensor" text
+      $(".graphOptions").toggleClass("hidden");
+      $("#noSensor").toggleClass("hidden");
+      // set default number of readings to show
+      Session.set("NumberOfReadings", 15);
+      // graph is ready
       Session.set("GraphIsSetup", true);
       //console.log("Seting up the graph!")
       graph = new google.visualization.LineChart(document.getElementById('graph'));
@@ -70,23 +83,33 @@ Deps.autorun(function() {
 
     currentProject = Session.get("currentProject");
     currentSensor = Session.get("currentSensor");
-    readings = Readings.find({parentProject: currentProject, sensorName: currentSensor.name}).fetch();
+    readings = Readings.find({parentSensor: currentSensor.parentSensor}, {sort: {timestamp: -1}, limit: Session.get("NumberOfReadings")}).fetch();
+    // Currently we only support two fixed axies, this could change later
     dataArray.push(["Time", "Readings"])
     //console.log(readings);
-    for (var i = 0; i<25; i++){
-      dataArray.push([readings[i].timestamp, readings[i].data]);
+
+    /* 
+      The array of Objects that comes out of Meteor.find needs to be 
+      transformed into a table of integers that GCharts understands 
+    */
+    if(readings.length > 0){
+      for (var i = 0; i<readings.length; i++){
+        dataArray.push([readings[i].timestamp, readings[i].data]);
+      }
+    }
+    else{
+      console.log(readings);
     }
     //console.log(dataArray);
     //console.log("I'm drawing it !");
     data = google.visualization.arrayToDataTable(dataArray);
-    graph.draw(data, graphOptions);
     
-    // Redraw the graph whenever the window resizes
-    function resize () {
-      graph = new google.visualization.LineChart(document.getElementById('graph'));
+    function draw () {
       graph.draw(data, graphOptions);
     }
-    window.onresize = resize;
+    draw();
+    // Redraw the graph whenever the window resizes
+    window.onresize = draw;
   }
 });
 
@@ -94,8 +117,8 @@ Deps.autorun(function() {
 Template.projects.projects = function () {
   return Projects.find({owner: Session.get("currentUser")._id});
 }
-Template.projects.sensorData = function (parent) {
-  return Readings.find({parentId: parent.hash.parent}).fetch();
+Template.projects.sensors = function (parent) {
+  return Sensors.find({parentProject: parent.hash.parent});
 }
 Template.projects.sensorId = function (id) {
   return {_id: id};
@@ -135,7 +158,7 @@ Template.projects.events = {
     if (event.target.tagName != "DIV"){
       event.target = event.target.parentNode;
     }
-    Session.set("currentSensor", {name: event.target.dataset.name, parentProject: event.target.parentNode.parentNode.id})
+    Session.set("currentSensor", {parentSensor: event.target.dataset.id, name: event.target.dataset.name})
   },
   'click #addProjectButton': function(){
     $('#projectModal').modal('show')
@@ -144,6 +167,33 @@ Template.projects.events = {
     $('#sensorModal').modal('show')
     // This is the best way I can think of to get the id of the parent project
     Session.set("RequestingProject", $(event.target).closest('.accordion-body').attr('id'));
+  },
+  'click #submitSensor': function(){
+    var newSensorName = $('#newSensorForm').children().children("#sensorName");
+    var newSensorType = $('#newSensorForm').children().children("#sensorType");
+    if(newSensorName.val() && newSensorType.val()){
+      if(Sensors.findOne({name: newSensorName.val()}) != undefined){
+        console.log("Already have one by that name!")
+        newSensorName.parent().addClass("error");
+        $("#sensorHelpText").html("You already have a sensor by that name!")
+        Session.set("SensorFormError", true);
+      }
+      else{
+        if(Session.get("SensorFormError")){
+          newSensorName.parent().removeClass('error');
+          $("#sensorHelpText").html("");
+          Session.set("SessionFormError", false);
+        }
+        newSensor = {
+          parentProject: Session.get("RequestingProject"),
+          name: newSensorName.val(),
+          type: newSensorType.val()
+        }
+        Sensors.insert(newSensor);
+        $('#sensorModal').modal('hide')
+        console.log("Submitted!");
+      }
+    }
   }
 }
 
