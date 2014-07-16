@@ -1,0 +1,35 @@
+<head>
+	<title>WebDuino - Making Your Arduino Smarter</title>
+	<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+	</script>
+</head>
+
+<template name="header">
+	<header>
+		<div class="wrapper">
+			<h1>WebDuino <small>Making Your Arduino Smarter</small></h1>
+			<!-- <form>
+				<input type="text" value="Email Address">
+				<input type="button" value="Sign Up">
+			</form> -->
+			{{> loginButtons}}
+			<div class="clear"></div>
+		</div>
+	</header>
+</template>
+
+<template name="main">
+	<div id="container">
+		{{> header}}
+		{{#if currentUser}}
+			{{> projects}}
+		{{else}}
+			{{> home}}
+		{{/if}}
+		<div class="clear"></div>
+		{{> footer}}
+	</div>
+</template>

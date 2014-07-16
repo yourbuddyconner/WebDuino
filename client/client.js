@@ -17,7 +17,8 @@ Meteor.startup(function(){
 
 // Set the current user to the session
 Deps.autorun(function(){
-  Session.set("currentUser", Meteor.user());
+  if (Meteor.user())
+    Session.set("currentUser", Meteor.user()._id);
 });
 
 //Autoform Debugging Code
@@ -42,80 +43,11 @@ AutoForm.addHooks(['insertSensorForm', 'insertProjectForm'], {
     }
   }
 });
-// For debugging - Take out later
-// Deps.autorun(function(){
-//   console.log("Current Sensor: " + Session.get("currentSensor"));
-// })
-// Deps.autorun(function(){
-//   console.log("Current Project: " + Session.get("currentProject"));
-// })
 
-/*
-  Populates and daws graph in the Template.projects
-  WARNING: Janky Code Ahead
-
-  The graph relies on multiple Session variables:
-    "NumberOfReadings"
-*/
-Deps.autorun(function() {
-  if(Session.get("currentTemplate") == "projects" && Session.get("currentProject") && Session.get("currentSensor")){
-    // Set all the variables if we havent set up the graph yet
-    if(!Session.get("GraphIsSetup")){
-      // show graph options and hide the "No Sensor" text
-      $(".graphOptions").toggleClass("hidden");
-      $("#noSensor").toggleClass("hidden");
-      // set default number of readings to show
-      Session.set("NumberOfReadings", 15);
-      // graph is ready
-      Session.set("GraphIsSetup", true);
-      //console.log("Seting up the graph!")
-      graph = new google.visualization.LineChart(document.getElementById('graph'));
-      data = null; 
-      graphOptions = {
-        height: 250,
-        animation:{
-          duration: 1000,
-          easing: 'out',
-        }
-      }
-    }
-    var currentProject, currentSensor = {}, readings, dataArray = [], nameArray = [];
-
-    currentProject = Session.get("currentProject");
-    currentSensor = Session.get("currentSensor");
-    readings = Readings.find({parentSensor: currentSensor.parentSensor}, {sort: {timestamp: -1}, limit: Session.get("NumberOfReadings")}).fetch();
-    // Currently we only support two fixed axies, this could change later
-    dataArray.push(["Time", "Readings"])
-    //console.log(readings);
-
-    /* 
-      The array of Objects that comes out of Meteor.find needs to be 
-      transformed into a table of integers that GCharts understands 
-    */
-    if(readings.length > 0){
-      for (var i = 0; i<readings.length; i++){
-        dataArray.push([readings[i].timestamp, readings[i].data]);
-      }
-    }
-    else{
-      console.log(readings);
-    }
-    //console.log(dataArray);
-    //console.log("I'm drawing it !");
-    data = google.visualization.arrayToDataTable(dataArray);
-    
-    function draw () {
-      graph.draw(data, graphOptions);
-    }
-    draw();
-    // Redraw the graph whenever the window resizes
-    window.onresize = draw;
-  }
-});
 
 // 'Projects' template helpers
 Template.projects.projects = function () {
-  return Projects.find({owner: Session.get("currentUser")._id});
+  return Projects.find({owner: Session.get("currentUser")});
 }
 Template.projects.sensors = function (parent) {
   return Sensors.find({parentProject: parent.hash.parent});
@@ -124,7 +56,10 @@ Template.projects.sensorId = function (id) {
   return {_id: id};
 } 
 Template.projectModals.requestingSensor = function() {
-  return Session.get("RequestingProject");
+  if(Session.get("RequestingProject"))
+    return Projects.findOne({_id: Session.get("RequestingProject")}).name;
+  else
+    return
 }
 Template.projects.helpers({
   projectFormSchema: function(){
@@ -191,6 +126,34 @@ Template.projects.events = {
         }
         Sensors.insert(newSensor);
         $('#sensorModal').modal('hide')
+        newSensorName.val("");
+        newSensorType.val("");
+        console.log("Submitted!");
+      }
+    }
+  },
+  'click #submitProject': function(){
+    var newProjectName = $('#newProjectForm').children().children("#projectName");
+    if(newProjectName.val()){
+      if(Projects.findOne({name: newProjectName.val(), owner: Session.get("currentUser")}) != undefined){
+        console.log("Already have a project by that name!")
+        newProjectName.parent().addClass("error");
+        $("#projectHelpText").html("You already have a project by that name!")
+        Session.set("ProjectFormError", true);
+      }
+      else{
+        if(Session.get("ProjectFormError")){
+          newProjectName.parent().removeClass('error');
+          $("#projectHelpText").html("");
+          Session.set("ProjectFormError", false);
+        }
+        newProject = {
+          name: newProjectName.val(),
+          owner: Session.get("currentUser")
+        }
+        Projects.insert(newProject);
+        $('#projectModal').modal('hide')
+        newProjectName.val("");
         console.log("Submitted!");
       }
     }
@@ -200,6 +163,11 @@ Template.projects.events = {
 // Code to run when certain templates render 
 Template.projects.rendered = function(){ 
   Session.set("currentTemplate", "projects")
+  Session.set("NumberOfReadings", 20);
+  $("#numberOfReadings").change(function(){
+    Session.set("NumberOfReadings", parseInt($("#numberOfReadings").val()));
+    console.log($("#numberOfReadings").val());
+  })
 }
 Template.home.rendered = function(){
   Session.set("currentTemplate", "home")

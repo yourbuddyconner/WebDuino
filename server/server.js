@@ -28,23 +28,34 @@ Meteor.methods({
   }
 });
 
+/* 
+  This is the access point where connected devices to send information to be recorded. It expects 
+  a sensor ID in the form of a URL and requires no authentication whatsoever (I might have to fix that 
+  later).  
+
+  Basically, the arduino will make an HTTP GET/POST request to /api/sensor_id with the data as a URL 
+  parameter. Iron-Router parses out the id and then the 'action' function does the rest. 
+*/
+
 Router.map(function(){
   this.route('accessPoint',{
-    path: '/api/:_id', // expects a project ID
+    path: '/api/:_id', // expects a (mongo) sensor ID
     where: 'server',
     action: function(){
-      var project = Projects.findOne({_id: this.params._id}); //find the corresponding project
-      if(project){
-        var time = new Date();
-        var params = this.params;
-        var theID = project.sensors[this.params.sensorIndex]
+      console.log("Incoming connection!!")
+      var sensor = Sensors.findOne({_id: this.params._id}); //find the corresponding sensor
+      console.log("It's for sensor: ", this.params._id)
+      console.log("owner: ", sensor.owner)
+
+      if(sensor){
         var newReading = {
-          parentProject: this.params._id,
-          timestamp: time,
-          data: params.data
+          owner: sensor.owner,
+          parentSensor: sensor._id,
+          timestamp: new Date(),
+          data: this.params.data
         };
         Readings.insert(newReading); 
-        };//end for
+        };//end if
       }
   });
 });

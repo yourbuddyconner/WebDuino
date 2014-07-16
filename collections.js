@@ -3,7 +3,7 @@ Sensors = new Meteor.Collection("sensors");
 Readings = new Meteor.Collection("readings");
 
 // THE LINE BELOW SHOULD BE COMMENTED OUT!
-SimpleSchema.debug = true;
+//SimpleSchema.debug = true;
 
 Schemas = {};
 

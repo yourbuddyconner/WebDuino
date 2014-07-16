@@ -216,25 +216,29 @@ header form input[type=button]:hover {
 /* Mostly Templates.Projects Code, bunch of common code is in here too though */
 
 	/* CSS for the Modals */
-.modalFormContainer{
-	margin: 10px 10px 10px 10px;
-}
-.modalFormContainer input{
-	margin: 0px;
-}
-.modalFormContainer form{
-	margin-bottom: 10px;
-}
-.sensorTitle {
-	display: inline-block;
-}
-.modalFormContainer {
-	max-height: 400px;
-	overflow: scroll;
-}
+	.modalFormContainer{
+		margin: 10px 10px 10px 10px;
+	}
+	.modalFormContainer input{
+		margin: 0px;
+	}
+	.modalFormContainer form{
+		margin-bottom: 10px;
+	}
+	.sensorTitle {
+		display: inline-block;
+	}
+	.modalFormContainer {
+		max-height: 400px;
+		overflow: scroll;
+	}
+	.modal {
+		margin: 0 auto;
+		max-height: 275px;
+	}
 #projectsAccordion {
 	float: left;
-	width: 275px;
+	width: 300px;
 	margin: 20px 0;
 }
 
@@ -286,7 +290,27 @@ header form input[type=button]:hover {
 #banner a.download span {
 	font-size: 0.7em;
 }
-
+.graphOptions{
+	width: 60%;
+	height: 50px;
+	float: right;
+	margin: 10px 0 0 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background-color: #f4f4f4;
+	-webkit-box-shadow: 0 1px 7px rgba(0,0,0,.4);
+	-moz-box-shadow: 0 1px 7px rgba(0,0,0,.4);
+	box-shadow: 0 1px 7px rgba(0,0,0,.4);
+	border: solid 3px #fff;
+	padding-bottom: -5px;
+}
+.graphOptions select {
+	width: 50px;
+}
+#numberOfReadingsContainer p {
+	font-size: 100%;
+}
 #banner .graph {
 	min-height: 200px;
 	text-align: center;
@@ -303,22 +327,6 @@ header form input[type=button]:hover {
 	padding-bottom: -5px;
 }
 
-#banner .graphOptions{
-	width: 60%;
-	height: 50px;
-	float: right;
-	margin: 10px 0 0 0;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	background-color: #ccc;
-	-webkit-box-shadow: 0 1px 7px rgba(0,0,0,.4);
-	-moz-box-shadow: 0 1px 7px rgba(0,0,0,.4);
-	box-shadow: 0 1px 7px rgba(0,0,0,.4);
-	border: solid 3px #fff;
-	padding-bottom: -5px;
-}
-
 #banner .graph img {
 	display: block;
 }
@@ -327,7 +335,9 @@ header form input[type=button]:hover {
 	margin: 75px 0 0 0;
 	color: #ccc;
 }
-
+#banner .graph p {
+	color: #ccc;
+}
 
 ul#social-links {
 	width: 340px;

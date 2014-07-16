@@ -15,7 +15,8 @@
 - Code the badge next to "Sensors" so it updates with the number of sensors with new readings
 - Add in chart options so you can modify the current chart on-the-fly (change scale, move left and right, show more or less points, etc.
 
-
+#### API Access Points
+- Implement [http://github.differential.io/reststop2/](RESTstop2) for our API access point as opposed to iron-router
 
 #### Home Page
 - ~~Redesign the home template, it looks like shit and should do something.~~

@@ -1,0 +1,115 @@
+<template name="projects">
+	{{> projectModals}}
+	<div class="wrapper">
+		<div id="projectTitle">
+			<h2 class="bigRed">Your Projects</h2>
+		</div>
+	</div>
+	<div id="banner">
+		<div class="wrapper">
+		<div class="accordion" id="projectsAccordion">
+			<div class="accordion-group">
+		{{#each projects}}
+				<div class="accordion-heading">
+      				<a class="accordion-toggle" data-toggle="collapse" data-parent="#projectsAccordion" data-id="{{_id}}" href="#{{_id}}">
+        				{{name}}
+      				</a>
+      			</div>
+				<div id="{{_id}}" class="yolo accordion-body collapse">
+			    	<div class="accordion-inner" id="sensorList">
+						{{#each sensors parent=_id}}
+							<div class="sensor well" data-name="{{name}}" data-id="{{_id}}">
+								<h5>{{name}}</h5>
+								<p>Sensor Type: {{type}}</p>
+								<!-- <p>Last Report: 4:30 3/24/2014</p> -->
+							</div>
+						{{/each}}
+						<div class="well" id="addSensorButton">
+							<a id="addSensorButton"><h5>Add Sensor +</h5></a>
+						</div>
+			    	</div>
+			    </div>
+		{{/each}}
+				<div class="accordion-heading">
+					<a id="addProjectButton" class="accordion-toggle" href="#">Add a Project +</a>
+				</div>
+			</div>
+		</div>
+			<section class="graph">
+				<div id="graph">
+				</div>
+				<div id="noSensor">
+					<h2>No Sensor Loaded :(</h2>
+					<p>Select one from a project to the left!</p>
+				</div>
+				<div id="noData" style="display: none;">
+					<h2>There are no readings for this sensor!</h2>
+					<p>Try sending some data!</p>
+				</div>
+			</section>
+			<div class="graphOptions hidden" id="graphOptions">
+				<div id="numberOfReadingsContainer">
+					<p>Number of data points:</p>
+					<select id="numberOfReadings">
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20" selected>20</option>
+						<option value="40">40</option>
+					</select>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</template>
+
+<template name="projectModals">
+	<div id="projectModal" class="modal fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    	<h3>Create a New Project</h3>
+		</div>
+		<div class="modalFormContainer">
+			<p>Fill in a name for your new project and click 'Save'</p>
+			<br>
+			<form id="newProjectForm">  
+				<div class="control-group">
+					<input type="text" id="projectName" placeholder="Project Name">
+					<br>				
+					<span class="help-text" id="projectHelpText"></span>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button onclick="$('#projectModal').modal('hide')" class="btn">Close</button>
+			<button type="submit" id="submitProject" class="btn btn-primary">Save</button>
+		</div>
+	</div>
+
+	<div id="sensorModal" class="modal fade">
+	  	<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3>Add a new Sensor to "{{requestingSensor}}"</h3>
+		</div>
+		<div class="modalFormContainer">
+			<form role="form" class="form-inline" id="newSensorForm">  
+				<div class="control-group">
+					<input type="text" id="sensorName" placeholder="Name">
+					<select id="sensorType">
+						<option value="">Select One:</option>
+						<option value="Potentiometer">Potentiometer</option>
+						<option value="Photoresistor">Photoresistor</option>
+						<option value="Temperature">Temperature</option>
+					</select>
+					<br>				
+					<span class="help-text" id="sensorHelpText"></span>
+				</div>
+			</form>
+			<button class="btn" onClick="alert('Not Implemented.')">Add Another +</button>
+		</div>
+		<div class="modal-footer">
+			<button onclick="$('#sensorModal').modal('hide')" class="btn">Close</button>
+			<button type="submit" id="submitSensor" class="btn btn-primary">Save</button>
+		</div>
+	</div>
+</template>
